@@ -1,0 +1,20 @@
+{
+	"destination":{
+		".dmg": "/Users/renshangui/Downloads/src/dmg",
+		".zip": "/Users/renshangui/Downloads/src/tar",
+		".tar": "/Users/renshangui/Downloads/src/tar",
+		".gz": "/Users/renshangui/Downloads/src/tar",
+		".bz2": "/Users/renshangui/Downloads/src/tar",
+		".rar": "/Users/renshangui/Downloads/src/tar",
+		".tgz": "/Users/renshangui/Downloads/src/tar",
+		".jpg": "/Users/renshangui/Downloads/images",
+		".png": "/Users/renshangui/Downloads/images",
+		".jpeg": "/Users/renshangui/Downloads/images",
+		".rmvb": "/Users/renshangui/Downloads/movies",
+		".mkv": "/Users/renshangui/Downloads/movies",
+		".mp4": "/Users/renshangui/Downloads/movies",
+		".txt": "/Users/renshangui/Downloads/documents",
+		".doc": "/Users/renshangui/Downloads/documents"
+		},
+	"log_path": "/Users/renshangui/logs/file_dispatcher.log"
+}
