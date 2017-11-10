@@ -3,6 +3,7 @@ import os
 import time
 import logging
 import subprocess
+import threading
 
 import ujson
 
@@ -43,6 +44,32 @@ def init_logger(path):
                         handlers=[file_handler])
 
 
+class LogCleaner(threading.Thread):
+    """日志清洁工"""
+
+    def __init__(self):
+        super(LogCleaner, self).__init__()
+        self._stop_event = threading.Event()
+
+    def stop(self):
+        self._stop_event.set()
+
+    def is_stoped(self):
+        return self._stop_event.is_set()
+
+    def run(self):
+        while True:
+            time.sleep(1)
+
+            if self.is_stoped():
+                break
+
+            if os.path.exists(config["log_path"]) and os.path.getsize(
+                    config["log_path"]) > (
+                                1024 * 1024 * 1024 * config["log_size"]):
+                os.remove(config["log_path"])
+
+
 class PathParser(object):
     def __init__(self, path):
         self._path = path
@@ -63,7 +90,8 @@ class PathParser(object):
 
 class FileCreationEventHandler(FileSystemEventHandler):
 
-    def move(self, path_parser):
+    @staticmethod
+    def move(path_parser):
         dest_path = config["destination"].get(path_parser.extend)
         if not dest_path:
             logging.info(
@@ -88,6 +116,10 @@ class FileCreationEventHandler(FileSystemEventHandler):
             self.move(PathParser(event.dest_path))
 
 
+class MyLoggingEventHandler(LoggingEventHandler, FileCreationEventHandler):
+    pass
+
+
 config = get_config()
 
 watch_path = ""
@@ -101,19 +133,24 @@ def main():
     global watch_path
     watch_path = args.path
 
-    log_handler = LoggingEventHandler()
-    file_creation_handler = FileCreationEventHandler()
+    log_handler = MyLoggingEventHandler()
+    # file_creation_handler = FileCreationEventHandler()
     observer = Observer()
-    observer.schedule(log_handler, args.path, recursive=True)
-    observer.schedule(file_creation_handler, args.path, recursive=True)
+    observer.schedule(log_handler, args.path)
+    # observer.schedule(file_creation_handler, args.path)
     observer.start()
+
+    log_cleaner = LogCleaner()
+    log_cleaner.start()
     try:
         while True:
             time.sleep(1)
     except KeyboardInterrupt:
         observer.stop()
+        log_cleaner.stop()
 
     observer.join()
+    log_cleaner.join()
 
 
 if __name__ == "__main__":

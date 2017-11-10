@@ -16,5 +16,6 @@
 		".txt": "/Users/renshangui/Downloads/documents",
 		".doc": "/Users/renshangui/Downloads/documents"
 		},
-	"log_path": "/Users/renshangui/logs/file_dispatcher.log"
+	"log_path": "/Users/renshangui/logs/watcher.log",
+	"log_size": 10
 }
