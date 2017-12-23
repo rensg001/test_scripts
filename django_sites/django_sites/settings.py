@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -25,8 +24,8 @@ SECRET_KEY = '@#6v@fjr955)93b!*+mi#4v4(wtota84*823zyf5w9b-ipd_pb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.djangofirst.com']
-
+ALLOWED_HOSTS = ['www.djangofirst.com', 'localhost', '127.0.0.1',
+                 'wechat.rsg001.me']
 
 # Application definition
 
@@ -37,7 +36,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'first_app.apps.FirstAppConfig'
+    'first_app.apps.FirstAppConfig',
+    'rest_framework',
+    'django_nose',
+    'mptt',
+    'area',
+    'wechat'
 ]
 
 MIDDLEWARE = [
@@ -70,7 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_sites.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -82,9 +85,23 @@ DATABASES = {
         'PASSWORD': 'djangofirst',
         'HOST': '127.0.0.1',
         'PORT': '5432',
+    },
+    'djangosecond': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'djangosecond',
+        'USER': 'djangosecond',
+        'PASSWORD': 'djangosecond',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'wechat.cache_backends.TTLDatabaseCache',
+        'LOCATION': 'django_sites_cache_table',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -104,7 +121,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -118,8 +134,39 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# django-nose
+
+# Use nose to run all tests
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+# Tell nose to measure coverage on the specified apps
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=first_app',
+    '--cover-min-percentage=90'
+]
+
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'INFO',
+#             'class': 'logging.FileHandler',
+#             'filename': '/home/dev/servers/logs/django.log',
+#         },
+#     },
+#     'loggers': {
+#         'wechat': {
+#             'handlers': ['file'],
+#             'level': 'INFO',
+#             'propagate': True,
+#         },
+#     },
+# }
