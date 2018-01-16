@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django_nose',
     'mptt',
     'area',
-    'wechat'
+    'wechat',
+    'trees'
 ]
 
 MIDDLEWARE = [
@@ -95,6 +96,10 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+DATABASE_ROUTERS = [
+    'wechat.cache_backends.CacheRouter'
+]
 
 CACHES = {
     'default': {
@@ -152,21 +157,29 @@ NOSE_ARGS = [
 ]
 
 
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'file': {
-#             'level': 'INFO',
-#             'class': 'logging.FileHandler',
-#             'filename': '/home/dev/servers/logs/django.log',
-#         },
-#     },
-#     'loggers': {
-#         'wechat': {
-#             'handlers': ['file'],
-#             'level': 'INFO',
-#             'propagate': True,
-#         },
-#     },
-# }
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        # 'file': {
+        #     'level': 'INFO',
+        #     'class': 'logging.FileHandler',
+        #     'filename': '/home/dev/servers/logs/django.log',
+        # },
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'wechat': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'trees': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
