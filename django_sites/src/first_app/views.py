@@ -6,6 +6,7 @@ from first_app.models import Test
 
 
 def index(request):
+    print 'request begin!'
     context = {"user": "第一个用户"}
     return render(request, "index.html", context)
 
