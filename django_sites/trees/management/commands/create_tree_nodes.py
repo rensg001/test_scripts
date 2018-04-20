@@ -6,6 +6,7 @@
 import logging
 
 from django.core.management import BaseCommand
+from django.db import transaction
 
 from trees.models import TreeNode
 
@@ -21,11 +22,22 @@ tree_nodes_data = [
     {'key': 'b', 'parent_key': 'salesDep', 'name': '员工B', 'is_leaf': True},
 ]
 
+def foo():
+    with transaction.atomic():
+        raise MyError()
+
+
+class MyError(Exception):
+    pass
+
 class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         logger.info('开始创建树节点')
-        for node_data in tree_nodes_data:
-            tree_node = TreeNode(**node_data)
+        with transaction.atomic():
+            foo()
+            tree_node = TreeNode(
+                **{'key': 'CEO3', 'parent_key': '', 'name': '总经理3',
+                   'is_leaf': False})
             tree_node.save()
         logger.info('创建树节点结束')

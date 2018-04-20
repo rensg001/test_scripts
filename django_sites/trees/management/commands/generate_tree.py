@@ -3,6 +3,7 @@
 #
 # Author rsg
 #
+import copy
 import json
 import logging
 import time
@@ -40,7 +41,7 @@ class MakeTree(object):
         self.unsorted_children_map = {}
         self.node_dict = {}
 
-    def _make_tree(self, tree_nodes):
+    def make_tree(self, tree_nodes):
         # 在原树节点集合中生成树
         self.node_dict = {node['key']: node for node in tree_nodes}
         for node in tree_nodes:
@@ -61,11 +62,36 @@ class MakeTree(object):
 
     @property
     def trees(self):
-        self._make_tree(self.tree_nodes)
+        self.make_tree(self.tree_nodes)
         self._sort_children(self.node_dict)
         roots = list(filter(lambda tree_node: not tree_node['parent_key'],
                             self.tree_nodes))
         return roots
+
+
+class MakeTree2(MakeTree):
+
+    def __init__(self):
+        self.tree = {}
+        super(MakeTree2, self).__init__()
+
+    def make_tree(self, root):
+        # 产生副作用
+        children = [tree_node for tree_node in self.tree_nodes
+                    if tree_node['parent_key'] == root['key']]
+        for child in children:
+            root.setdefault('children', {}).update({child['key']: child})
+            self.make_tree(child)
+
+    @property
+    def get_tree(self):
+        roots = [tree_node for tree_node in self.tree_nodes
+                 if not tree_node['parent_key']]
+        for root in roots:
+            self.make_tree(root)
+        return roots
+
+
 
 
 class Command(BaseCommand):
@@ -81,5 +107,6 @@ class Command(BaseCommand):
         #     create_tree(root, tree_nodes)
         #     root_list.append(root)
             # logger.info(json.dumps(root_list))
-        roots = MakeTree().trees
+        # roots = MakeTree().trees
+        roots = MakeTree2().get_tree
         logger.info(json.dumps(roots))

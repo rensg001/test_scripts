@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^first_app/', include('first_app.urls')),
     url(r'^wechat/', include('wechat.urls')),
     url(r'^admin/', admin.site.urls),
+    url('^rest_test/', include('rest_test.urls'))
 ]
 
 urlpatterns += [

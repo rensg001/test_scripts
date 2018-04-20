@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'mptt',
     'area',
     'wechat',
-    'trees'
+    'trees',
+    'relationship'
 ]
 
 MIDDLEWARE = [
