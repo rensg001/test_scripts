@@ -1,10 +1,9 @@
+from django.core.cache import cache
+from django.shortcuts import redirect
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from django.shortcuts import redirect
-from django.core.cache import cache
 
-from rest_test.serializers import TestSerilalizer
-from rest_test.forms import TestForm
+
 # Create your views here.
 
 class IndexView(GenericAPIView):
