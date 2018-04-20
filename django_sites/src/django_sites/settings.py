@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django_nose',
     'mptt',
     'area',
-    'wechat',
     'trees'
 ]
 
@@ -81,19 +80,19 @@ WSGI_APPLICATION = 'django_sites.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'djangofirst',
-        'USER': 'djangofirst',
-        'PASSWORD': 'djangofirst',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': os.getenv('POSTGRESQL_DATABASE'),
+        'USER': os.getenv('POSTGRESQL_USER'),
+        'PASSWORD': os.getenv('POSTGRESQL_PASSWORD'),
+        'HOST': os.getenv('POSTGRESQL_HOST'),
+        'PORT': os.getenv('POSTGRESQL_PORT'),
     },
     'djangosecond': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'djangosecond',
-        'USER': 'djangosecond',
-        'PASSWORD': 'djangosecond',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': os.getenv('POSTGRESQL_DATABASE'),
+        'USER': os.getenv('POSTGRESQL_USER'),
+        'PASSWORD': os.getenv('POSTGRESQL_PASSWORD'),
+        'HOST': os.getenv('POSTGRESQL_HOST'),
+        'PORT': os.getenv('POSTGRESQL_PORT'),
     }
 }
 
@@ -103,7 +102,7 @@ DATABASE_ROUTERS = [
 
 CACHES = {
     'default': {
-        'BACKEND': 'wechat.cache_backends.TTLDatabaseCache',
+        'BACKEND': 'src.wechat.cache_backends.TTLDatabaseCache',
         'LOCATION': 'django_sites_cache_table',
     }
 }
