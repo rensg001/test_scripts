@@ -9,10 +9,14 @@ from django.dispatch import receiver
 
 from .models import Users
 
+user_id = 1
 
 @receiver(request_finished)
 def my_callback(sender, **kwargs):
-    print('Request finished!')
+    global user_id
+    user_name = 'xx{id}'.format(id=user_id)
+    Users.objects.create(name=user_name)
+    user_id += 1
 
 
 @receiver(post_save, sender=Users)
