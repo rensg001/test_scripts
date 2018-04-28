@@ -4,12 +4,6 @@ from __future__ import print_function
 from __future__ import absolute_import
 
 
-def exchange(data, i, j):
-    tmp = data[i]
-    data[i] = data[j]
-    data[j] = tmp
-
-
 def quickly_sort(lst, left, right):
     if left > right:
         return
