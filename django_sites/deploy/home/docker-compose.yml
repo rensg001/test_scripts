@@ -16,7 +16,7 @@ services:
     depends_on:
       - db
     volumes:
-      - ../src:/code
+      - ../../src:/code
     command: ./run-site.sh
 
   db:
@@ -38,3 +38,4 @@ services:
       - 80:80
     volumes:
       - ./nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf:ro
+      - ../../src/static:/code/static

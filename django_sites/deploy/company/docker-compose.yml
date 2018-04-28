@@ -1,0 +1,41 @@
+version: "3"
+services:
+  web:
+    image: test_scripts:latest
+    restart: always
+    environment:
+      - POSTGRESQL_DATABASE=test_scripts
+      - POSTGRESQL_USER=test_scripts
+      - POSTGRESQL_PASSWORD=test_scripts
+      - POSTGRESQL_HOST=db
+      - POSTGRESQL_PORT=5433
+    expose:
+      - 8000
+    links:
+      - db:db
+    depends_on:
+      - db
+    volumes:
+      - ../../src:/code
+    command: ./run-site.sh
+
+  db:
+    image: docker.zuoyetong.com.cn/postgres-proxy:9.4
+    expose:
+      - 5433
+    environment:
+     - POSTGRES_DB=test_scripts
+     - POSTGRES_USER=test_scripts
+     - POSTGRES_PASSWORD=test_scripts
+
+  nginx:
+    image: docker.zuoyetong.com.cn/openresty:1.9-techu-dns
+    depends_on:
+      - web
+    links:
+      - web
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.conf:/opt/openresty/nginx/conf/nginx.conf:ro
+      - ../../src/static:/code/static
