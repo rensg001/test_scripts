@@ -184,3 +184,6 @@ LOGGING = {
         },
     },
 }
+
+
+STATIC_ROOT = '/code/static'

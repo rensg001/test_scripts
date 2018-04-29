@@ -1,8 +1,11 @@
 # -*- coding: utf8 -*-
 from django.shortcuts import render
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin
 
 # Create your views here.
-from first_app.models import Test
+from first_app.models import Test, Users
+from first_app.serializers import UserSerializer, UserDetailSerializer
 
 
 def index(request):
@@ -15,3 +18,24 @@ def foo():
     rows = Test.objects.using('djangosecond').all()
     for row in rows:
         print(row)
+
+
+class CreateAPIView(GenericAPIView, CreateModelMixin):
+
+    serializer_class = UserSerializer
+
+    def post(self, request, *args, **kwargs):
+        response = self.create(request, *args, **kwargs)
+        response['Location'] = response.data['url']
+        return response
+
+
+class UserDetailAPIView(GenericAPIView, RetrieveModelMixin):
+    lookup_field = 'name'
+    serializer_class = UserDetailSerializer
+
+    def get_queryset(self):
+        return Users.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
