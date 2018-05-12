@@ -5,7 +5,9 @@ pipeline {
     }
     stages {
         stage ('Test') {
-            sh 'echo $PATH'
+            steps {
+                sh 'echo $PATH'
+            }
         }
         stage ('Build') {
             steps {
