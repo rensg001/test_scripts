@@ -1,19 +1,17 @@
 pipeline {
-    agent {
-        docker { image 'python:3.5.1'}
-    }
+    agent none
     environment {
-        VAR1 = 'this is var1'
+        IMAGENAME = "test_scripts"
     }
     stages {
-        stage ('show python version') {
+        stage ('Build') {
             steps {
-                sh 'python --version'
+                sh './django_sites/build.sh'
             }
         }
-        stage ('test environment') {
+        stage ('Deploy') {
             steps {
-                sh './print_environment.sh'
+                sh './django_sites/deploy/home/deploy.sh'
             }
         }
     }
