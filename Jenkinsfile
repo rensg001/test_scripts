@@ -12,7 +12,9 @@ pipeline {
             }
         }
         stage ('test environment') {
-            sh './print_environment.sh'
+            steps {
+                sh './print_environment.sh'
+            }
         }
     }
 }
