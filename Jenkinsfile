@@ -4,6 +4,9 @@ pipeline {
         IMAGENAME = "test_scripts"
     }
     stages {
+        stage ('Test') {
+            sh 'echo $PATH'
+        }
         stage ('Build') {
             steps {
                 sh './django_sites/build.sh'
