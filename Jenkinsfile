@@ -1,5 +1,5 @@
 pipeline {
-    agent { docker { image 'python:3.5.1' } }
+    agent any
     stages {
         stage('Build') {
             steps {
@@ -8,13 +8,6 @@ pipeline {
                     echo "Multiline shell steps works too"
                     ls -lah
                 '''
-            }
-        }
-        stage('Deploy') {
-            steps {
-                retry(3) {
-                    sh './make_error.sh'
-                }
             }
         }
     }
