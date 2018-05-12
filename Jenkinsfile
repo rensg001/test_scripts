@@ -5,15 +5,15 @@ pipeline {
     }
     stages {
         stage ('Build') {
-            dir('django_sites') {
-                steps {
+            steps {
+                dir('django_sites') {
                     sh './build.sh'
                 }
             }
         }
         stage ('Deploy') {
-            dir('django_sites/deploy/home') {
-                steps {
+            steps {
+                dir('django_sites/deploy/home') {
                     sh './deploy.sh'
                 }
             }
