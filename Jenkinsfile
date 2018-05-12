@@ -1,26 +1,12 @@
 pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            steps {
-                sh 'echo "Hello World"'
-                sh '''
-                    echo "Multiline shell steps works too"
-                    ls -lah
-                '''
-            }
-        }
-        stage('Deploy') {
-            steps {
-                retry(3) {
-                    sh './make_error.sh'
-                }
-            }
-        }
+    agent {
+        docker { image 'python:3.5.1'}
     }
-    post {
-        always {
-            echo 'Building has finished.'
+    stages {
+        stage ('show python version') {
+            steps {
+                sh 'python --version'
+            }
         }
     }
 }
