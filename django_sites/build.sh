@@ -10,5 +10,7 @@ if [ $? -ne 0 ]; then
     exit 0
 fi
 
+# if already has the latest tag, delete it first.
+docker rmi ${IMAGENAME}:latest
 
 docker tag ${IMAGE} ${IMAGENAME}:latest
