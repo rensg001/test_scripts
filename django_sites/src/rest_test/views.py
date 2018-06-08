@@ -2,6 +2,10 @@ from django.core.cache import cache
 from django.shortcuts import redirect
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
+from rest_framework import status
+
+from .serializers import TestSerializer
+from .models import RestTest
 
 
 # Create your views here.
@@ -25,3 +29,17 @@ class RedirectView(GenericAPIView):
     def get(self, request, num):
         message = 'This is the redirected resource. your num is {}'.format(num)
         return Response({'message': message})
+
+
+class BadRequestAPIView(GenericAPIView):
+
+    serializer_class = TestSerializer
+
+    def get_queryset(self):
+        return RestTest.objects.all()
+
+    def get(self, request, *args, **kwargs):
+
+        query_set = self.get_queryset()
+        serializer = self.get_serializer(query_set, many=True)
+        return Response({'data': serializer.data}, status=status.HTTP_200_OK)

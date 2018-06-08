@@ -2,7 +2,6 @@ version: "3"
 services:
   web:
     image: test_scripts:latest
-    restart: always
     environment:
       - POSTGRESQL_DATABASE=test_scripts
       - POSTGRESQL_USER=test_scripts
@@ -17,7 +16,7 @@ services:
       - db
     volumes:
       - ../../src:/code
-    command: ./run-site.sh
+    command: ./run-unittest.sh
 
   db:
     image: postgres:9.3
@@ -27,15 +26,3 @@ services:
      - POSTGRES_DB=test_scripts
      - POSTGRES_USER=test_scripts
      - POSTGRES_PASSWORD=test_scripts
-
-  nginx:
-    image: openresty/openresty:latest
-    depends_on:
-      - web
-    links:
-      - web
-    ports:
-      - 8010:80
-    volumes:
-      - ./nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf:ro
-      - ../../src/static:/code/static

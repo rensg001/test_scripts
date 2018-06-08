@@ -9,7 +9,7 @@ class Users(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
 
 
-class Test(models.Model):
+class FirstTest(models.Model):
     class Meta:
         db_table = 'app_test'
 

@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.test import Client
 
 # Create your tests here.
-from django.urls import reverse_lazy
+from django.core.urlresolvers import reverse_lazy
 
 
 class IndexTestCase(TestCase):

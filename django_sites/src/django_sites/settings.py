@@ -30,20 +30,17 @@ ALLOWED_HOSTS = ['www.djangofirst.com', 'localhost', '127.0.0.1',
 # Application definition
 
 INSTALLED_APPS = [
+    'first_app',
+    'rest_test',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'first_app.apps.FirstAppConfig',
     'rest_framework',
-    'django_nose',
+    # 'django_nose',
     'mptt',
-    'area',
-    'wechat',
-    'trees',
-    'relationship'
 ]
 
 MIDDLEWARE = [
@@ -87,27 +84,19 @@ DATABASES = {
         'PASSWORD': os.getenv('POSTGRESQL_PASSWORD'),
         'HOST': os.getenv('POSTGRESQL_HOST'),
         'PORT': os.getenv('POSTGRESQL_PORT'),
-    },
-    'djangosecond': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRESQL_DATABASE'),
-        'USER': os.getenv('POSTGRESQL_USER'),
-        'PASSWORD': os.getenv('POSTGRESQL_PASSWORD'),
-        'HOST': os.getenv('POSTGRESQL_HOST'),
-        'PORT': os.getenv('POSTGRESQL_PORT'),
     }
 }
 
-DATABASE_ROUTERS = [
-    'wechat.cache_backends.CacheRouter'
-]
+# DATABASE_ROUTERS = [
+#     'wechat.cache_backends.CacheRouter'
+# ]
 
-CACHES = {
-    'default': {
-        'BACKEND': 'src.wechat.cache_backends.TTLDatabaseCache',
-        'LOCATION': 'django_sites_cache_table',
-    }
-}
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'src.wechat.cache_backends.TTLDatabaseCache',
+#         'LOCATION': 'django_sites_cache_table',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -148,14 +137,14 @@ STATIC_URL = '/static/'
 # django-nose
 
 # Use nose to run all tests
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+# TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # Tell nose to measure coverage on the specified apps
-NOSE_ARGS = [
-    '--with-coverage',
-    '--cover-package=first_app',
-    '--cover-min-percentage=90'
-]
+# NOSE_ARGS = [
+#     '--with-coverage',
+#     '--cover-package=first_app',
+#     '--cover-min-percentage=90'
+# ]
 
 
 LOGGING = {

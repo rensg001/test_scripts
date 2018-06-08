@@ -4,7 +4,11 @@
 # Author rsg
 #
 from rest_framework import serializers
+from .models import RestTest
 
-class TestSerilalizer(serializers.Serializer):
 
-    name = serializers.CharField()
+class TestSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = RestTest
+        fields = ('name', )

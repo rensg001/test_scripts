@@ -4,7 +4,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin
 
 # Create your views here.
-from first_app.models import Test, Users
+from first_app.models import FirstTest, Users
 from first_app.serializers import UserSerializer, UserDetailSerializer
 
 
@@ -15,7 +15,7 @@ def index(request):
 
 
 def foo():
-    rows = Test.objects.using('djangosecond').all()
+    rows = FirstTest.objects.all()
     for row in rows:
         print(row)
 
