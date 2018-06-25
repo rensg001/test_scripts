@@ -3,14 +3,16 @@
 #
 # Author rsg
 #
-import time
+import base64
 
 import websocket
 
 ws = websocket.WebSocket()
-ws.connect("ws://localhost:8888/websocket")
-for i in range(10):
-    ws.send("I am client A")
-    print(ws.recv())
+ws.connect("ws://localhost:8888/websocket/image")
+ws.send("image")
+b64_image_content = ws.recv()
 
-print(ws.recv())
+image_content = base64.b64decode(b64_image_content)
+
+with open("mountain2.jpeg", "wb") as image:
+    image.write(image_content)
