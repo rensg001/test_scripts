@@ -39,7 +39,7 @@ def server(readfd, writefd):
     try:
         with open(path, 'r') as f:
             content = f.read()
-    except:
+    except IOError:
         content = 'exception'
 
     if isinstance(content, str):
