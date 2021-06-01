@@ -49,7 +49,7 @@ simplegeneric==0.8.1
 singledispatch==3.4.0.3
 six==1.11.0
 traitlets==4.3.2
-urllib3==1.24.2
+urllib3==1.26.5
 watchdog==0.8.3
 wcwidth==0.1.7
 wechatpy==1.5.4
